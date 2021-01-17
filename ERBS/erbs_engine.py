@@ -1,12 +1,13 @@
 from ERBS.ERBS_api_client import ErbsClient
+from discordBot_token import erbs_api_key
 
-erbs_api_key = '4b3DlkjW8d7A2yj0p7F6w2pK5ZmgczJJ1b2nOV2J'
-erbs_version = 'v1'
+api_key = erbs_api_key
+version = 'v1'
 
 
 class ErbsEngine:
     # API Client 생성
-    erbsAPI = ErbsClient(api_key=erbs_api_key, version=erbs_version)
+    erbsAPI = ErbsClient(api_key=api_key, version=version)
 
     async def recent(self, name: str):
         print('user name: ', name)

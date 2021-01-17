@@ -1,4 +1,10 @@
-tableName = 'discord_user'
+from Settings import debug
+
+if not debug:
+    tableName = 'discord_user'
+else:
+    tableName = 'discord_user_test'
+
 
 initMDB = f'CREATE TABLE IF NOT EXISTS {tableName}(' \
           f'no      INT NOT NULL AUTO_INCREMENT PRIMARY KEY, ' \

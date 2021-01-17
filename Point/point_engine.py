@@ -1,8 +1,11 @@
 import discord
 from apscheduler.schedulers.background import BackgroundScheduler
+from discord import Embed
+
 from Point import point_DB
 from Point import user_DB
 from Point.script import point_table, reason_script
+from Settings import debug
 
 
 class PointEngine:
@@ -18,9 +21,13 @@ class PointEngine:
 
         # set schedule
         self.schedule.start()
-        self.schedule.add_job(self.dailyReset, 'cron', hour=12, id="dailyReset")
 
-    def eventInfo(self) -> str:
+        if not debug:
+            self.schedule.add_job(self.dailyReset, 'cron', hour=12, id="dailyReset")
+        else:
+            self.schedule.add_job(self.dailyReset, 'cron', second=40, id="dailyReset")
+
+    def eventInfo(self) -> Embed:
         title = "디스코드 포인트 이벤트"
         text = '디스코드 포인트를 모아 기프티콘을 받아 가자'
         em = discord.Embed(title=title, description=text)
@@ -55,6 +62,7 @@ class PointEngine:
         print("daily user reset", self.sleepList)
         for user in self.sleepList:
             self.sleepList[user] = self.sleepList[user] + 1
+            user_DB.update_user_sleep(user, self.sleepList[user])
 
     def initUserList(self):
         # make user list
@@ -64,13 +72,15 @@ class PointEngine:
         tmp_pointList = user_DB.get_pointList()
         self.pointList = {user[0]: user[1] for user in tmp_pointList}
 
-        print("bot initUserList", self.sleepList)
+        print("bot init sleepList", self.sleepList)
+        print("bot init pointList", self.pointList)
 
     def dailyCheck(self, name):
         # 최초 채팅 -> 리스트 추가
         if name not in self.sleepList:
+            user_DB.insert_user(name, "new user", point_table['first'], 0)
             point_DB.insert(name, point_table['first'], reason_script['first'], point_table['first'])
-            self.newUser(name)
+            self.initUserList()
             text = f"{name}님이 최초로 채팅을 하셨습니다. ㅊㅋㅊㅋ\n" \
                    f"특별 보너스로 {point_table['first']}포인트 적립되었습니다."
             return text
@@ -78,7 +88,7 @@ class PointEngine:
         # 오늘 처음 채팅 -> 포인트 획득
         if self.sleepList[name] != 0:
             # 개근 여부 확인
-            prev_val = point_DB.get_point(name)
+            prev_val = user_DB.get_point(name)
             if self.sleepList[name] == 1:
                 reason = reason_script["daily"]
                 get_point = point_table['daily']
@@ -90,11 +100,8 @@ class PointEngine:
                        f"특별 보너스 포인트로 {get_point}포인트를 획득하셨습니다."
             self.sleepList[name] = 0
             point_DB.insert(name, get_point, reason, prev_val + get_point)
-
+            user_DB.update_user_point(name, prev_val + get_point)
+            return text
         else:
             # 중복 채팅 -> 무시
             return None
-
-    def newUser(self, name):
-        self.userList[name] = True
-        self.sleepList[name] = 0

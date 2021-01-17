@@ -1,6 +1,7 @@
 from discordBot import MyBot
+from discordBot_token import discord_token
 
-discord_token = "NzgxNTI0MjMwNTI0ODk1MjQy.X7-5KA.xA_8OfdbxwIWCzz8CS2IVRZpiqI"
+token = discord_token
 
 if __name__ == '__main__':
     client = MyBot()

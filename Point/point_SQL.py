@@ -1,5 +1,9 @@
+from Settings import debug
 
-tableName = 'discord_point'
+if not debug:
+    tableName = 'discord_point'
+else:
+    tableName = 'discord_point_test'
 
 table = {
     'no': 'int',
