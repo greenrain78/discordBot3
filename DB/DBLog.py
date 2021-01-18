@@ -12,7 +12,7 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 FILENAME = 'DB/log/db'
 
 # 로그 저장할 폴더 생성
-log_dir = '{}/db'.format(current_dir)
+log_dir = '{}/log'.format(current_dir)
 if not os.path.exists(log_dir):
     os.makedirs(log_dir)
 
@@ -25,12 +25,18 @@ file_handler = logging.handlers.TimedRotatingFileHandler(
     filename=FILENAME, when='midnight', interval=1, encoding='utf-8')
 file_handler.suffix = '%Y-%m-%d_%H-%M'  # 로그 파일명 날짜 기록 부분 포맷 지정
 
+stream_handler = logging.StreamHandler()
+stream_handler.setLevel(logging.WARNING)
+
+
 # 포맷 지정
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - [%(filename)s:%(lineno)d] %(message)s')
 file_handler.setFormatter(formatter)  # 핸들러에 로깅 포맷 할당
+stream_handler.setFormatter(formatter)  # 핸들러에 로깅 포맷 할당
 
 # 핸들러 추가
 logger.addHandler(file_handler)
+logger.addHandler(stream_handler)
 
 
 def getLogger():

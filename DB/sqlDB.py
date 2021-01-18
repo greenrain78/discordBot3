@@ -1,5 +1,8 @@
 import os
 import sqlite3
+from DB.DBLog import getLogger
+
+log = getLogger()
 
 
 def getConn():
@@ -8,39 +11,48 @@ def getConn():
     conn = sqlite3.connect(path)
     return conn
 
-
 def runSQL(sql):
-    conn = getConn()
-    cur = conn.cursor()
+    try:
+        conn = getConn()
+        cur = conn.cursor()
 
-    print("DB run: ", sql)
-    cur.execute(sql)
+        cur.execute(sql)
 
-    conn.commit()
-    conn.close()
+        conn.commit()
+        conn.close()
+        log.info("run: %s", sql)
+    except Exception as e:
+        log.exception("run error: %s", sql)
 
 
 def getSQL(sql):
-    conn = getConn()
-    cur = conn.cursor()
+    try:
+        conn = getConn()
+        cur = conn.cursor()
 
-    print("DB get run: ", sql)
-    cur.execute(sql)
-    result = cur.fetchall()
+        cur.execute(sql)
+        result = cur.fetchall()
 
-    conn.commit()
-    conn.close()
-    return result
+        conn.commit()
+        conn.close()
+
+        log.info("get: %s \n \t %s", sql, result)
+        return result
+    except Exception as e:
+        log.exception("get error: %s", sql)
 
 
 def getOneSQL(sql):
-    conn = getConn()
-    cur = conn.cursor()
+    try:
+        conn = getConn()
+        cur = conn.cursor()
 
-    print("DB get one run: ", sql)
-    cur.execute(sql)
-    result = cur.fetchone()
+        cur.execute(sql)
+        result = cur.fetchone()
 
-    conn.commit()
-    conn.close()
-    return result
+        conn.commit()
+        conn.close()
+        log.info("get: %s \n \t %s", sql, result)
+        return result
+    except Exception as e:
+        log.exception("get error: %s", sql)
