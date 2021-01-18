@@ -1,5 +1,5 @@
 from typing import List
-
+from Log.infoLog import logger as log
 from DB import manageDB
 from Point.user_SQL import initMDB, initDB, tableName
 
@@ -32,7 +32,7 @@ def insert_user(name: str, role: str, point: int, sleep: int):
           f'(name, role, point, sleep) values(' \
           f'"{name}", "{role}", {point}, {sleep})'
     manageDB.runSQL(sql)
-    print(f"insert_user: {name}, role({role}), point({point}), sleep({sleep})")
+    log.info(f"insert_user: {name}, role({role}), point({point}), sleep({sleep})")
 
 
 def update_user_point(name: str, point: int):
@@ -41,7 +41,7 @@ def update_user_point(name: str, point: int):
           f'WHERE name = "{name}"'
 
     manageDB.runSQL(sql)
-    print(f"update user({name}): point({point})")
+    log.info(f"update user({name}): point({point})")
 
 
 def update_user_sleep(name: str, sleep: int):
@@ -50,4 +50,13 @@ def update_user_sleep(name: str, sleep: int):
           f'WHERE name = "{name}"'
 
     manageDB.runSQL(sql)
-    print(f"update user({name}): sleep({sleep})")
+    log.info(f"update user({name}): sleep({sleep})")
+
+
+def update_user_awake(name: str):
+    sql = f'UPDATE {tableName} ' \
+          f'SET sleep = {0} ' \
+          f'WHERE name = "{name}"'
+
+    manageDB.runSQL(sql)
+    log.info(f"update user({name}): wake up ")

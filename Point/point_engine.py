@@ -1,6 +1,7 @@
 import discord
 from apscheduler.schedulers.background import BackgroundScheduler
 from discord import Embed
+from Log.infoLog import logger as log
 
 from Point import point_DB
 from Point import user_DB
@@ -59,7 +60,7 @@ class PointEngine:
         return text
 
     def dailyReset(self):
-        print("daily user reset", self.sleepList)
+        log.info("daily user reset: %s", self.sleepList)
         for user in self.sleepList:
             self.sleepList[user] = self.sleepList[user] + 1
             user_DB.update_user_sleep(user, self.sleepList[user])
@@ -72,8 +73,8 @@ class PointEngine:
         tmp_pointList = user_DB.get_pointList()
         self.pointList = {user[0]: user[1] for user in tmp_pointList}
 
-        print("bot init sleepList", self.sleepList)
-        print("bot init pointList", self.pointList)
+        log.info("bot init sleepList: %s", self.sleepList)
+        log.info("bot init pointList: %s", self.pointList)
 
     def dailyCheck(self, name):
         # 최초 채팅 -> 리스트 추가
@@ -98,9 +99,12 @@ class PointEngine:
                 get_point = point_table['daily'] + point_table["sleep"] * self.sleepList[name]
                 text = f"{name}이 {self.sleepList[name]}일만에 복귀했습니다.\n" \
                        f"특별 보너스 포인트로 {get_point}포인트를 획득하셨습니다."
-            self.sleepList[name] = 0
+
             point_DB.insert(name, get_point, reason, prev_val + get_point)
             user_DB.update_user_point(name, prev_val + get_point)
+
+            self.sleepList[name] = 0
+            user_DB.update_user_awake(name)
             return text
         else:
             # 중복 채팅 -> 무시
