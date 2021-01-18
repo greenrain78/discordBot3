@@ -32,7 +32,7 @@ def insert_user(name: str, role: str, point: int, sleep: int):
           f'(name, role, point, sleep) values(' \
           f'"{name}", "{role}", {point}, {sleep})'
     manageDB.runSQL(sql)
-    log.info(f"insert_user: {name}, role({role}), point({point}), sleep({sleep})")
+    log.debug(f"insert_user: {name}, role({role}), point({point}), sleep({sleep})")
 
 
 def update_user_point(name: str, point: int):
@@ -41,7 +41,7 @@ def update_user_point(name: str, point: int):
           f'WHERE name = "{name}"'
 
     manageDB.runSQL(sql)
-    log.info(f"update user({name}): point({point})")
+    log.debug(f"update user({name}): point({point})")
 
 
 def update_user_sleep(name: str, sleep: int):
@@ -50,7 +50,7 @@ def update_user_sleep(name: str, sleep: int):
           f'WHERE name = "{name}"'
 
     manageDB.runSQL(sql)
-    log.info(f"update user({name}): sleep({sleep})")
+    log.debug(f"update user({name}): sleep({sleep})")
 
 
 def update_user_awake(name: str):
@@ -59,4 +59,4 @@ def update_user_awake(name: str):
           f'WHERE name = "{name}"'
 
     manageDB.runSQL(sql)
-    log.info(f"update user({name}): wake up ")
+    log.debug(f"update user({name}): wake up ")

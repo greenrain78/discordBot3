@@ -73,8 +73,8 @@ class PointEngine:
         tmp_pointList = user_DB.get_pointList()
         self.pointList = {user[0]: user[1] for user in tmp_pointList}
 
-        log.info("bot init sleepList: %s", self.sleepList)
-        log.info("bot init pointList: %s", self.pointList)
+        log.debug("bot init sleepList: %s", self.sleepList)
+        log.debug("bot init pointList: %s", self.pointList)
 
     def dailyCheck(self, name):
         # 최초 채팅 -> 리스트 추가

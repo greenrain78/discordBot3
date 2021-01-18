@@ -4,6 +4,7 @@ from ERBS.erbs_bot import ERBSBot
 # from Music.msuic_bot import MusicBot
 from Point.point_bot import PointBot
 from Basic.basic_bot import BasicBot
+from Log.infoLog import logger as log
 
 
 class MyBot(commands.Bot):
@@ -24,6 +25,6 @@ class MyBot(commands.Bot):
         self.add_cog(self.basicBot)
 
     async def on_message(self, message):
-        print('{0.author}: {0.content}'.format(message))
+        log.info('{0.author}: {0.content}'.format(message))
         await self.pointBot.dailyCheck(message)
         await super(MyBot, self).on_message(message)

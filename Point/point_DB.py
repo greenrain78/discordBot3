@@ -1,5 +1,6 @@
 from DB import manageDB
 from Point.point_SQL import initMDB, initDB, tableName
+from Log.infoLog import logger as log
 
 
 def init():
@@ -11,4 +12,4 @@ def insert(user: str, point: int, reason: str, total: int):
           f'(user, point, reason, total) values(' \
           f'"{user}", {point}, "{reason}", {total})'
     manageDB.runSQL(sql)
-    print(f"{user} insert point{point}, total{total}, reason{reason} ")
+    log.debug(f"{user} insert point{point}, total{total}, reason{reason} ")
