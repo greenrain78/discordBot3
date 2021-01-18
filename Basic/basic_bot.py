@@ -22,3 +22,11 @@ class BasicBot(commands.Cog):
             await ctx.send(text)
             await asyncio.sleep(60)
             await ctx.message.delete()  # 입력된 명령 제거
+
+    @commands.command()
+    async def github(self, ctx):
+        """
+        디코 봇 깃허브 링크
+        """
+        text = 'https://github.com/greenrain78/discordBot3'
+        await ctx.send(text)

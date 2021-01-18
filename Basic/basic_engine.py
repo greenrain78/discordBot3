@@ -11,11 +11,11 @@ class BasicEngine:
         return text
 
     def getStatePoint(self) -> str:
-        userList = self.pointBot.engine.userList
+        pointList = self.pointBot.engine.pointList
         sleepList = self.pointBot.engine.sleepList
 
         text = f"포인트 봇 정보\n" \
-               f"유저 리스트: {userList}\n" \
+               f"점수 리스트: {pointList}\n" \
                f"잠수 리스트: {sleepList}\n"
 
         return text
