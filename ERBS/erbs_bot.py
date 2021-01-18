@@ -21,6 +21,9 @@ class ERBSBot(commands.Cog):
         try:
             text = await self.engine.recent(name)
             msg = await ctx.send(text)
+            await asyncio.sleep(60)
+
             await ctx.message.delete()  # 입력된 명령 제거
+            await msg.delete()  # 메세지 삭제
         except Exception as e:
             log.exception("command botState error")

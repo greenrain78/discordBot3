@@ -17,9 +17,11 @@ class PointBot(commands.Cog):
         """
         try:
             em = self.engine.eventInfo()
+
             msg = await ctx.send(embed=em)
-            await ctx.message.delete()  # 입력된 명령 제거
             await asyncio.sleep(60)
+
+            await ctx.message.delete()  # 입력된 명령 제거
             await msg.delete()  # 메세지 삭제
         except Exception as e:
             log.exception("command botState error")
@@ -31,11 +33,15 @@ class PointBot(commands.Cog):
         현재 내가 보유중인 디스코드 포인트를 확인한다.
         """
         try:
-
             user = ctx.author.name
             text = self.engine.getPoint(user)
-            await ctx.send(text)
+
+            msg = await ctx.send(text)
+            await asyncio.sleep(60)
+
             await ctx.message.delete()  # 입력된 명령 제거
+            await msg.delete()  # 메세지 삭제
+
         except Exception as e:
             log.exception("command botState error")
 
@@ -47,8 +53,12 @@ class PointBot(commands.Cog):
         """
         try:
             text = self.engine.getPoint(name)
-            await ctx.send(text)
+
+            msg = await ctx.send(text)
+            await asyncio.sleep(60)
+
             await ctx.message.delete()  # 입력된 명령 제거
+            await msg.delete()  # 메세지 삭제
         except Exception as e:
             log.exception("command botState error")
 

@@ -18,18 +18,20 @@ class BasicBot(commands.Cog):
             name = ctx.message.author.name
             if name == '김대원':
                 text = self.engine.getState()
-                await ctx.send(text)
+                msg = await ctx.send(text)
                 await asyncio.sleep(60)
+
                 await ctx.message.delete()  # 입력된 명령 제거
+                await msg.delete()  # 메세지 삭제
             else:
                 text = '허용되지 않은 사용자 입니다.'
-                await ctx.send(text)
+                msg = await ctx.send(text)
                 await asyncio.sleep(60)
+
                 await ctx.message.delete()  # 입력된 명령 제거
+                await msg.delete()  # 메세지 삭제
         except Exception as e:
             log.exception("command botState error")
-
-
 
     @commands.command()
     async def github(self, ctx):
@@ -38,6 +40,10 @@ class BasicBot(commands.Cog):
         """
         try:
             text = 'https://github.com/greenrain78/discordBot3'
-            await ctx.send(text)
+            msg = await ctx.send(text)
+            await asyncio.sleep(60)
+
+            await ctx.message.delete()  # 입력된 명령 제거
+            await msg.delete()  # 메세지 삭제
         except Exception as e:
             log.exception("command github error")
