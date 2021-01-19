@@ -1,9 +1,9 @@
 FROM python:3.7
 
-RUN mkdir /erbs
+RUN mkdir /discord
 
-COPY requirements.txt /erbs
-WORKDIR /erbs
+COPY requirements.txt /discord
+WORKDIR /discord
 
 RUN pip install -r requirements.txt
 
