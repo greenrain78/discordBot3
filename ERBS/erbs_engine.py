@@ -1,5 +1,6 @@
 from ERBS.ERBS_api_client import ErbsClient
 from discordBot_token import erbs_api_key
+from Log.infoLog import logger as log
 
 api_key = erbs_api_key
 version = 'v1'
@@ -10,11 +11,11 @@ class ErbsEngine:
     erbsAPI = ErbsClient(api_key=api_key, version=version)
 
     async def recent(self, name: str):
-        print('user name: ', name)
+        log.debug('user name: ', name)
         user_num = await self.erbsAPI.fetch_user_nickname(name)
-        print('user_num: ', user_num)
+        log.debug('user_num: ', user_num)
         result = await self.erbsAPI.fetch_user_games(user_num)
-        print('result = ', result)
+        log.debug('result = ', result)
         game = result[0]  # 제일 마지막 판
         text = f'1111유저명: {game["nickname"]}\n' \
                f'등수: {game["gameRank"]}\n' \
