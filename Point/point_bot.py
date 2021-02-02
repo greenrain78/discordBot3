@@ -5,6 +5,10 @@ from Point.point_engine import PointEngine
 
 
 class PointBot(commands.Cog):
+    """
+    포인트 봇
+    디스코드 포인트 조회및 출석채크 기능을 담당하는 봇이다.
+    """
     def __init__(self, bot):
         self.bot = bot
         self.engine = PointEngine()
