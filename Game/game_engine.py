@@ -36,20 +36,22 @@ def odd_even(user, point, args):
     rand = random.randrange(1, 3)
     # 홀
     if rand == 1:
+        text = f"정답은 [홀]!!! \n"
         if num == "홀":
-            text = f"정답은 홀!!! \n정답입니다!!\n"
+            text += f"정답입니다!!\n"
             pt = point
         elif num == "짝":
-            text = f"정답은 홀!!! \n틀렸습니다ㅠㅠ\n"
+            text += f"틀렸습니다ㅠㅠ\n"
             pt = -point
 
     # 짝
     elif rand == 2:
+        text = f"정답은 [짝]!!! \n"
         if num == "홀":
-            text = f"정답은 짝!!! \n틀렸습니다ㅠㅠ\n"
+            text += f"틀렸습니다ㅠㅠ\n"
             pt = -point
         elif num == "짝":
-            text = f"정답은 짝!!! \n정답입니다!!\n"
+            text += f"정답입니다!!\n"
             pt = point
 
     # 점수 처리

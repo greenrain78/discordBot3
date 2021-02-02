@@ -10,7 +10,7 @@ class BasicBot(commands.Cog):
         self.engine = BasicEngine(pointBot, erbsBot)
 
     @commands.command()
-    async def botState(self, ctx):
+    async def botstate(self, ctx):
         """
         디코 봇 상태 확인
         """
