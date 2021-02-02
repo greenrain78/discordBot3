@@ -12,7 +12,8 @@ initMDB = f'CREATE TABLE IF NOT EXISTS {tableName}(' \
           f'role    VARCHAR(255) NOT NULL, ' \
           f'join_time  datetime  NOT NULL DEFAULT CURRENT_TIMESTAMP, ' \
           f'point   INT     NOT NULL, ' \
-          f'sleep   INT     NOT NULL' \
+          f'sleep   INT     NOT NULL, ' \
+          f'game_count   INT DEFAULT 0' \
           f');'
 
 initDB = f'CREATE TABLE IF NOT EXISTS {tableName}(' \
@@ -20,5 +21,7 @@ initDB = f'CREATE TABLE IF NOT EXISTS {tableName}(' \
          f'name    VARCHAR(255) NOT NULL,' \
          f'role    VARCHAR(255) NOT NULL,' \
          f'join_time  datetime  NOT NULL DEFAULT CURRENT_TIMESTAMP,' \
-         f'point   INT     NOT NULL' \
+         f'point   INT     NOT NULL, ' \
+         f'sleep   INT     NOT NULL, ' \
+         f'game_count   INT DEFAULT 0' \
          f');'

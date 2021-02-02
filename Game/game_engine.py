@@ -56,7 +56,6 @@ def odd_even(user, point, args):
 
     # 점수 처리
     text += update_point("홀짝 게임", user, pt)
-
     return text
 
 

@@ -26,7 +26,7 @@ class GameBot(commands.Cog):
 
                 elif game_name == "홀짝":
                     text = engine.odd_even(user, pt, args)
-
+                    user_DB.update_user_game_count(user)
                 else:
                     text = "해당 게임이 존재하지 않습니다."
 

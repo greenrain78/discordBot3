@@ -60,3 +60,12 @@ def update_user_awake(name: str):
 
     manageDB.runSQL(sql)
     log.debug(f"update user({name}): wake up ")
+
+
+def update_user_game_count(name: str):
+    sql = f'UPDATE {tableName} ' \
+          f'SET game_count = game_count + 1 ' \
+          f'WHERE name = "{name}"'
+
+    manageDB.runSQL(sql)
+    log.debug(f"update user({name}): wake up ")
