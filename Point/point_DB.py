@@ -13,3 +13,12 @@ def insert(user: str, point: int, reason: str, total: int):
           f'"{user}", {point}, "{reason}", {total})'
     manageDB.runSQL(sql)
     log.debug(f"{user} insert point{point}, total{total}, reason{reason} ")
+
+
+def select(user: str):
+    sql = f'SELECT * FROM {tableName} ' \
+          f'WHERE user = "{user}" ' \
+          f'ORDER BY time DESC LIMIT 10;'
+    result = manageDB.getSQL(sql)
+    log.debug(f"read user list = {user} : {result} ")
+    return result

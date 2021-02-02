@@ -59,6 +59,17 @@ class PointEngine:
             text = f'유저({name})의 획득 포인트는 {pt}입니다,'
         return text
 
+    def getPointList(self, name: str) -> str:
+
+        response = point_DB.select(name)
+        text = f"사용자: {name}의 점수 리스트\n"
+        for row in response:
+            text += f"획득 포인트: {row[2]}, \t " \
+                    f"획득 일시: {row[4]}, \t" \
+                    f"총합 포인트: {row[5]}, \t" \
+                    f"획득 사유: {row[3]}\n"
+        return text
+
     def dailyReset(self):
         log.info("daily user reset: %s", self.sleepList)
         for user in self.sleepList:

@@ -9,6 +9,7 @@ class PointBot(commands.Cog):
     포인트 봇
     디스코드 포인트 조회및 출석채크 기능을 담당하는 봇이다.
     """
+
     def __init__(self, bot):
         self.bot = bot
         self.engine = PointEngine()
@@ -39,6 +40,25 @@ class PointBot(commands.Cog):
         try:
             user = ctx.author.name
             text = self.engine.getPoint(user)
+
+            msg = await ctx.send(text)
+            await asyncio.sleep(60)
+
+            await ctx.message.delete()  # 입력된 명령 제거
+            await msg.delete()  # 메세지 삭제
+
+        except Exception as e:
+            log.exception("command botState error")
+
+    @commands.command()
+    async def mylist(self, ctx):
+        """
+        내 점수 리스트 확인
+        최근 포인트 획득 리스트를 확인한다.
+        """
+        try:
+            user = ctx.author.name
+            text = self.engine.getPointList(user)
 
             msg = await ctx.send(text)
             await asyncio.sleep(60)
