@@ -23,7 +23,7 @@ class GameBot(commands.Cog):
             try:
                 pt = int(point)
                 mypoint = user_DB.get_point(user)
-                if pt < 0 or mypoint <= pt:
+                if pt < 0 or mypoint < pt:
                     text = f"{user}님 보유 포인트가 부족합니다.\n" \
                            f"입력하신 포인트: {pt}, 보유 포인트: {mypoint}"
 
