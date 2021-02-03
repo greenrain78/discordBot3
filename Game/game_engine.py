@@ -27,35 +27,74 @@ def odd_even(user, point, args):
     check = check_wrong_args(args, 1)
     if check:
         return check
-    num = args[0]
-    if num != "홀" and num != "짝":
+    input_num = args[0]
+    if input_num != "홀" and input_num != "짝":
         text = f"홀짝 게임에서는 홀 짝 둘중 하나만 선택할 수 있어요.\n 알겠나요?"
+        return text
+
+    # 홀짝
+    rand = random.randrange(0, 100)
+    num = int(rand % 2)
+    # 홀
+    if num == 1:
+        text = f"정답은 [홀]!!! \n"
+        if input_num == "홀":
+            text += f"정답입니다!!\n"
+            pt = point
+        elif input_num == "짝":
+            text += f"틀렸습니다ㅠㅠ\n"
+            pt = -point
+
+    # 짝
+    elif num == 0:
+        text = f"정답은 [짝]!!! \n"
+        if input_num == "홀":
+            text += f"틀렸습니다ㅠㅠ\n"
+            pt = -point
+        elif input_num == "짝":
+            text += f"정답입니다!!\n"
+            pt = point
+
+    # 점수 처리
+    text += f"나온 숫자: {rand}\n"
+    text += update_point("홀짝 게임", user, pt)
+    return text
+
+
+def coin(user, point, args):
+    # 인자 확인
+    check = check_wrong_args(args, 1)
+    if check:
+        return check
+    input_num = args[0]
+    if input_num != "앞" and input_num != "뒤":
+        text = f"동전 게임에서는 앞 뒤 둘중 하나만 선택할 수 있어요.\n 알겠나요?"
         return text
 
     # 홀짝
     rand = random.randrange(1, 3)
     # 홀
     if rand == 1:
-        text = f"정답은 [홀]!!! \n"
-        if num == "홀":
+        text = f"정답은 [앞면]!!! \n"
+        if input_num == "앞":
             text += f"정답입니다!!\n"
             pt = point
-        elif num == "짝":
+        elif input_num == "뒤":
             text += f"틀렸습니다ㅠㅠ\n"
             pt = -point
 
     # 짝
     elif rand == 2:
-        text = f"정답은 [짝]!!! \n"
-        if num == "홀":
+        text = f"정답은 [뒷면]!!! \n"
+        if input_num == "앞":
             text += f"틀렸습니다ㅠㅠ\n"
             pt = -point
-        elif num == "짝":
+        elif input_num == "뒤":
             text += f"정답입니다!!\n"
             pt = point
 
     # 점수 처리
-    text += update_point("홀짝 게임", user, pt)
+    text += update_point("동전 게임", user, pt)
     return text
 
 
