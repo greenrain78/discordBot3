@@ -1,7 +1,8 @@
 from discord.ext import commands
 
+from Chat.chat_bot import ChatBot
 from ERBS.erbs_bot import ERBSBot
-# from Music.msuic_bot import MusicBot
+# from Music.music_bot import MusicBot
 from Game.game_bot import GameBot
 from Point.point_bot import PointBot
 from Basic.basic_bot import BasicBot
@@ -25,14 +26,17 @@ class MyBot(commands.Bot):
         self.erbsBot = ERBSBot(self)
         self.basicBot = BasicBot(self, pointBot=self.pointBot, erbsBot=self.erbsBot)
         self.gameBot = GameBot(self)
+        self.chatBot = ChatBot(self)
 
         # add bot
         self.add_cog(self.pointBot)
         self.add_cog(self.erbsBot)
         self.add_cog(self.basicBot)
         self.add_cog(self.gameBot)
+        self.add_cog(self.chatBot)
 
     async def on_message(self, message):
         log.info('{0.author}: {0.content}'.format(message))
+        await self.chatBot.checkBlock(message)
         await self.pointBot.dailyCheck(message)
         await super(MyBot, self).on_message(message)
