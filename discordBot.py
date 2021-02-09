@@ -38,5 +38,6 @@ class MyBot(commands.Bot):
     async def on_message(self, message):
         log.info('{0.author}: {0.content}'.format(message))
         await self.chatBot.checkBlock(message)
-        await self.pointBot.dailyCheck(message)
+
         await super(MyBot, self).on_message(message)
+        await self.pointBot.dailyCheck(message)

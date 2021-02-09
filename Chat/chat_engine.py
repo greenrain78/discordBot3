@@ -35,3 +35,6 @@ class ChatEngine:
             return True
         else:
             return False
+
+    def clearList(self):
+        self.blockList.clear()
