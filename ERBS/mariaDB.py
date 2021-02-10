@@ -1,6 +1,6 @@
 import mysql.connector
 from DB.DBLog import getLogger
-from ERBS_token import mariaDB_password, mariaDB_ID, mariaDB_IP
+from Settings import mariaDB_password, mariaDB_ID, mariaDB_IP
 
 log = getLogger()
 

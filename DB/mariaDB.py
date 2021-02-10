@@ -1,12 +1,13 @@
 import mysql.connector
 from DB.DBLog import getLogger
+from Settings import mariaDB_IP, mariaDB_ID, mariaDB_password
 
 log = getLogger()
 
 config = {
-    'user': 'greenrain',
-    'password': 'Prosto1449@db',
-    'host': '192.168.219.107',
+    'user': mariaDB_ID,
+    'password': mariaDB_password,
+    'host': mariaDB_IP,
     'database': 'discord_bot',
     'port': '5306'
 }
