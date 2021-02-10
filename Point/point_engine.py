@@ -41,7 +41,8 @@ class PointEngine:
         title2 = "상품 목록"
         text2 = f"커피 기프티콘\n" \
                 f"목표 포인트: 10000pt\n" \
-                f"남은 수량: 2장\n"
+                f"남은 수량: 1장\n" \
+                f"(상일이가 상품을 수령하였습니다.)\n"
         em.add_field(name=title2, value=text2, inline=False)
 
         footer = '반응이 좋거나 활성화가 잘되면 상품을 더 늘리겠습니다.'
@@ -53,14 +54,10 @@ class PointEngine:
             text = f"미등록 사용자 입니다."
             return text
         pt = user_DB.get_point(name)
-        if pt == 0:
-            text = '데이터 베이스에 사용자 정보가 없습니다.'
-        else:
-            text = f'유저({name})의 획득 포인트는 {pt}입니다,'
+        text = f'유저({name})의 획득 포인트는 {pt}입니다,'
         return text
 
     def getPointList(self, name: str) -> str:
-
         response = point_DB.select(name)
         text = f"사용자: {name}의 점수 리스트\n"
         for row in response:
@@ -120,3 +117,19 @@ class PointEngine:
         else:
             # 중복 채팅 -> 무시
             return None
+
+    def givePoint(self, name: str, point: int) -> str:
+        if name not in self.sleepList:
+            text = f"미등록 사용자 입니다."
+            return text
+
+        pt = user_DB.get_point(name)
+        result = pt + point
+        reason = f"관리자에 의해 사용자({name})가 포인트를 {point}만큼 획득하였습니다."
+
+        user_DB.update_user_point(name, result)
+        point_DB.insert(name, point, reason, result)
+
+        text = f"관리자에 의해 사용자{name}가 포인트를 획득하셨습니다." \
+               f"획득 포인트: {point}, 총 포인트: {result}"
+        return text

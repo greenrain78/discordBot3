@@ -86,6 +86,33 @@ class PointBot(commands.Cog):
         except Exception as e:
             log.exception("command botState error")
 
+    @commands.command()
+    async def givepoint(self, ctx, user, point):
+        """
+        해당 사용자의 포인트를 갱신한다.
+        주어진 포인트 만큼 사용자의 포인트를 감소하거나 증가시킨다.
+        """
+        try:
+            name = ctx.message.author.name
+            if name == '김대원':
+                pt = int(point)
+                text = self.engine.givePoint(user, pt)
+
+                msg = await ctx.send(text)
+                await asyncio.sleep(60)
+
+                await ctx.message.delete()  # 입력된 명령 제거
+                await msg.delete()  # 메세지 삭제
+            else:
+                text = '허용되지 않은 사용자 입니다.'
+                msg = await ctx.send(text)
+                await asyncio.sleep(60)
+
+                await ctx.message.delete()  # 입력된 명령 제거
+                await msg.delete()  # 메세지 삭제
+        except Exception as e:
+            log.exception("command botState error")
+
     async def dailyCheck(self, message):
         try:
             name = message.author.name
