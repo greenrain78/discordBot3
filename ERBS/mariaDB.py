@@ -1,13 +1,13 @@
 import mysql.connector
 from DB.DBLog import getLogger
-from ERBS_token import mariaDB_password, mariaDB_ID
+from ERBS_token import mariaDB_password, mariaDB_ID, mariaDB_IP
 
 log = getLogger()
 
 config = {
     'user': mariaDB_ID,
     'password': mariaDB_password,
-    'host': '192.168.219.107',
+    'host': mariaDB_IP,
     'database': 'ERBS_DB',
     'port': '5306'
 }
