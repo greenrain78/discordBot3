@@ -8,6 +8,7 @@ from Point import user_DB
 class GameBot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.max_point = 600
 
     @commands.command()
     async def game(self, ctx, point, game_name, *args):
@@ -26,6 +27,10 @@ class GameBot(commands.Cog):
                 if pt < 0 or mypoint < pt:
                     text = f"{user}님 보유 포인트가 부족합니다.\n" \
                            f"입력하신 포인트: {pt}, 보유 포인트: {mypoint}"
+                elif self.max_point < pt:
+                    text = f"입력하신 포인트가 도박의 마지노선을 넘었습니다.\n" \
+                           f"저희가 감당할 수 있는 액수가 아니예요. 저희 돈이 없어요 ㅠㅠ\n" \
+                           f"입력하신 포인트: {pt}, 마지노선: {self.max_point}"
 
                 elif game_name == "홀짝":
                     text = engine.odd_even(user, pt, args)
