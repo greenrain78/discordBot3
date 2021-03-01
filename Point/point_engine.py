@@ -39,10 +39,13 @@ class PointEngine:
         em.add_field(name=title1, value=text1, inline=False)
 
         title2 = "상품 목록"
-        text2 = f"커피 기프티콘\n" \
+        text2 = f"커피 기프티콘 2장\n" \
                 f"목표 포인트: 10000pt\n" \
-                f"남은 수량: 1장\n" \
-                f"(상일이가 상품을 수령하였습니다.)\n"
+                f"남은 수량: 0장\n" \
+                f"(상일이가 모든 상품을 수령하였습니다.)\n\n" \
+                f"아직 상품이 준비안되었습니다.\n" \
+                f"프리 시즌 기간"
+
         em.add_field(name=title2, value=text2, inline=False)
 
         footer = '반응이 좋거나 활성화가 잘되면 상품을 더 늘리겠습니다.'
@@ -130,6 +133,6 @@ class PointEngine:
         user_DB.update_user_point(name, result)
         point_DB.insert(name, point, reason, result)
 
-        text = f"관리자에 의해 사용자{name}가 포인트를 획득하셨습니다." \
+        text = f"관리자에 의해 사용자({name})가 포인트를 획득하셨습니다." \
                f"획득 포인트: {point}, 총 포인트: {result}"
         return text
