@@ -8,6 +8,7 @@ from Point.point_bot import PointBot
 from Basic.basic_bot import BasicBot
 from Log.infoLog import logger as log
 from Settings import debug
+from Stock.stock_bot import StockBot
 
 
 class MyBot(commands.Bot):
@@ -27,6 +28,7 @@ class MyBot(commands.Bot):
         self.basicBot = BasicBot(self, pointBot=self.pointBot, erbsBot=self.erbsBot)
         self.gameBot = GameBot(self)
         self.chatBot = ChatBot(self)
+        self.stockBot = StockBot(self)
 
         # add bot
         self.add_cog(self.pointBot)
@@ -34,6 +36,8 @@ class MyBot(commands.Bot):
         self.add_cog(self.basicBot)
         self.add_cog(self.gameBot)
         self.add_cog(self.chatBot)
+        self.add_cog(self.stockBot)
+
 
     async def on_message(self, message):
         log.info('{0.author}: {0.content}'.format(message))
