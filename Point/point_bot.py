@@ -2,6 +2,7 @@ import asyncio
 from discord.ext import commands
 from Log.infoLog import logger as log
 from Point.point_engine import PointEngine
+from Settings import superuser
 
 
 class PointBot(commands.Cog):
@@ -94,7 +95,7 @@ class PointBot(commands.Cog):
         """
         try:
             name = ctx.message.author.name
-            if name == '김대원':
+            if name == superuser:
                 pt = int(point)
                 text = self.engine.givePoint(user, pt)
 

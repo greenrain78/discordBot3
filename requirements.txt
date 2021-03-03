@@ -16,3 +16,5 @@ mysql~=0.0.2
 mysql-connector-python~=8.0.22
 apscheduler~=3.6.3
 beautifulsoup4~=4.9.3
+
+

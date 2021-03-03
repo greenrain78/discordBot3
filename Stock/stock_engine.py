@@ -145,3 +145,6 @@ class StockEngine:
         price = SearchStock.get_price(code)
         text = f"해당 주식의 가격은 {price} 입니다."
         return text
+
+    def searchstock(self, name):
+        pass
