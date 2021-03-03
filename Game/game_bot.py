@@ -120,7 +120,7 @@ class GameBot(commands.Cog):
             log.exception("command botState error")
 
     @commands.command()
-    async def bet(self, ctx, point, arg):
+    async def betting(self, ctx, point, arg):
         """
         포인트 배팅을 연다
         """

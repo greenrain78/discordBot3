@@ -7,8 +7,8 @@ from Settings import superuser
 
 class BetEngine:
     open_user = ""
-    win = 0
-    loss = 0
+    win = 1
+    loss = 1
     context = ""
     userList = {}
 
@@ -30,7 +30,7 @@ class BetEngine:
         if not cls.open_user:
             return f"현재 배팅이 열려있지 않습니다.\n"
 
-        text += f"열려 있는 배팅을 종료합니다.\n"
+        text += f"배팅을 종료합니다.\n"
         if name == cls.open_user or name == superuser:
             text += f"정상 종료하였습니다.\n"
         else:
@@ -41,16 +41,16 @@ class BetEngine:
                 f"총 {cls.win + cls.loss}포인트를 획득하셨습니다.\n"
 
         # 정산
-        for user in cls.userList.values():
-            if user[0] == result:
-                point = (cls.win+cls.loss)/(cls.win if result else cls.loss) * user[1]
+        for user, values in cls.userList.items():
+            if values[0] == result:
+                point = (cls.win+cls.loss)/(cls.win if result else cls.loss) * values[1]
                 cls.update_point(name, point,
                                  reason=f"{cls.open_user}가 주최한 도박에서 {result}로 {point}만큼 배팅에 성공하셨습니다.")
-
+                text += f"{user}가 {point}를 획득하셨습니다.\n"
         # 지우기
         cls.open_user = ""
-        cls.win = 0
-        cls.loss = 0
+        cls.win = 1
+        cls.loss = 1
         cls.context = ""
         cls.userList.clear()
 
@@ -81,37 +81,45 @@ class BetEngine:
 
     @classmethod
     def infoBet(cls, name) -> Embed:
-        title = "디스코드 실시간 예측!"
-        text = f"주최: {cls.open_user}, 주관: 대원컴퍼니, testbot"
-        em = discord.Embed(title=title, description=text)
-
-        title1 = "내용"
-        text1 = cls.context
-        em.add_field(name=title1, value=text1, inline=False)
-
-        title2 = "현황"
-        text2 = f"총합 포인트: {cls.win + cls.loss}"
-        text2 += f"승리\n" \
-                 f"인원: {[user for user in cls.userList if cls.userList[0]]}\n" \
-                 f"총 포인트: {cls.win}\n" \
-                 f"배율: {(cls.win + cls.loss) / cls.win}"
-        text2 += f"패배\n" \
-                 f"인원: {[user for user in cls.userList if not cls.userList[0]]}\n" \
-                 f"총 포인트: {cls.loss}\n" \
-                 f"배율: {(cls.win + cls.loss) / cls.loss}"
-
-        em.add_field(name=title2, value=text2, inline=False)
-        title3 = "배팅 현황"
-        if name in cls.userList:
-            text3 = f"배팅: {'승리' if cls.userList[name][0] else '패배'}" \
-                    f"배팅 포인트: {cls.userList[name][1]}"
+        if not cls.open_user:
+            title = "디스코드 실시간 예측!"
+            text = f"주최: {'아무도 없어요 ㅠㅠ'}, 주관: 대원컴퍼니, testbot"
+            em = discord.Embed(title=title, description=text)
         else:
-            text3 = "쫄?"
+            # 배율 계산
 
-        em.add_field(name=title3, value=text3, inline=False)
+            # 내용
+            title = "디스코드 실시간 예측!"
+            text = f"주최: {cls.open_user}, 주관: 대원컴퍼니, testbot"
+            em = discord.Embed(title=title, description=text)
 
-        footer = '가즈아!!!!!!!'
-        em.set_footer(text=footer)
+            title1 = "내용"
+            text1 = cls.context
+            em.add_field(name=title1, value=text1, inline=False)
+
+            title2 = "현황"
+            text2 = f"총합 포인트: {cls.win + cls.loss}\n"
+            text2 += f"승리\n" \
+                     f"인원: {[user for user in cls.userList if cls.userList[user][0]]}\n" \
+                     f"총 포인트: {cls.win}\n" \
+                     f"배율: {(cls.win + cls.loss) / cls.win}\n"
+            text2 += f"패배\n" \
+                     f"인원: {[user for user in cls.userList if not cls.userList[user][0]]}\n" \
+                     f"총 포인트: {cls.loss}\n" \
+                     f"배율: {(cls.win + cls.loss) / cls.loss}\n"
+
+            em.add_field(name=title2, value=text2, inline=False)
+            title3 = "배팅 현황"
+            if name in cls.userList:
+                text3 = f"배팅: {'승리' if cls.userList[name][0] else '패배'}" \
+                        f"배팅 포인트: {cls.userList[name][1]}"
+            else:
+                text3 = "쫄?"
+
+            em.add_field(name=title3, value=text3, inline=False)
+
+            footer = '가즈아!!!!!!!'
+            em.set_footer(text=footer)
         return em
 
     @classmethod
