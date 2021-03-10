@@ -8,7 +8,7 @@ from Point import user_DB
 
 
 class GameBot(commands.Cog):
-    max_point = 600
+    max_point = 10000000000
 
     def __init__(self, bot):
         self.bot = bot
