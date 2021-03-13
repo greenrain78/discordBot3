@@ -44,7 +44,7 @@ class BetEngine:
         for user, values in cls.userList.items():
             if values[0] == result:
                 point = (cls.win+cls.loss)/(cls.win if result else cls.loss) * values[1]
-                cls.update_point(name, point,
+                cls.update_point(user, point,
                                  reason=f"{cls.open_user}가 주최한 도박에서 {result}로 {point}만큼 배팅에 성공하셨습니다.")
                 text += f"{user}가 {point}를 획득하셨습니다.\n"
         # 지우기

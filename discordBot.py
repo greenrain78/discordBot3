@@ -19,7 +19,7 @@ class MyBot(commands.Bot):
         else:
             prefix = commands.when_mentioned_or("!")
 
-        desc = 'GreenRain discord bot 3'
+        desc = 'GreenRain discord bot 3.5'
         super(MyBot, self).__init__(command_prefix=prefix, description=desc)
 
         # create bot
