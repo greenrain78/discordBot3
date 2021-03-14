@@ -1,12 +1,7 @@
 import discord
 from apscheduler.schedulers.background import BackgroundScheduler
 from discord import Embed
-from Log.infoLog import logger as log
 
-from Point import point_DB
-from Point import user_DB
-from Point.script import point_table, reason_script
-from Settings import debug
 from Stock.search_stock import SearchStock
 
 
